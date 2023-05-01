@@ -17,18 +17,46 @@ namespace test_liste.panel
             _carService = new CarService();
 
             bool running = true;
-            int k;
+            string k;
             while (running)
             {
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-                Console.WriteLine("\n1 - Display all cars.\n2 - Search for cars.\n3 - Remove cars.\n");
+                Console.WriteLine("Display - Display all cars.");
+                Console.WriteLine("Search - Search for cars.");
+                Console.WriteLine("Remove - Remove cars.");
 
-                k = Console.Read();
+                Console.WriteLine("\nOther - End the program.\n");
 
+                k = Console.ReadLine();
+
+                Console.WriteLine("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+
+                switch (k.ToLower())
+                {
+                    case "display":
+                        this.Display();
+                        break;
+                    case "search":
+                        this.Search();
+                        break;
+                    case "remove":
+                        this.RemoveCars();
+                        break;
+                    default:
+                        running = false;
+                        break;
+                }
             }
         }
 
         // Metode
+
+        // Display all current cars.
+
+        public void Display()
+        {
+            _carService.Display();
+        }
 
         // Searches for a tag and displays found cars.
         public void Search()
@@ -36,7 +64,7 @@ namespace test_liste.panel
             string input = "";
             Console.WriteLine("Type a tag you want to search for :\n");
             input = Console.ReadLine();
-            Console.WriteLine();
+            Console.WriteLine("\nYour results are :\n");
 
             List<Car> list = _carService.SearchForTag(input);
             foreach (Car c in list)
