@@ -7,7 +7,5 @@ internal class Program
     private static void Main(string[] args)
     {
         Panel panel = new Panel();
-
-        panel.RemoveCars();
     }
 }
