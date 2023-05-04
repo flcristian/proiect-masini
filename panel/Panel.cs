@@ -16,7 +16,13 @@ namespace test_liste.panel
         public Panel()
         {
             _carService = new CarService();
+            this.Main();
+        }
 
+        // Pages
+
+        public void Main()
+        {
             bool running = true;
             string k;
             while (running)
@@ -24,9 +30,9 @@ namespace test_liste.panel
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
                 Console.WriteLine("Display - Display all cars.");
                 Console.WriteLine("Search - Search for cars.");
-                Console.WriteLine("Remove - Remove cars.");
+                Console.WriteLine("Edit - Edit the car list.");
 
-                Console.WriteLine("\nOther - End the program.\n");
+                Console.WriteLine("\nAnything else to end the program.\n");
 
                 k = Console.ReadLine();
 
@@ -40,13 +46,42 @@ namespace test_liste.panel
                     case "search":
                         this.Search();
                         break;
-                    case "remove":
-                        this.RemoveCars();
+                    case "edit":
+                        this.EditCars();
+                        break;
+                    case "help":
                         break;
                     default:
                         running = false;
                         break;
                 }
+            }
+        }
+
+        public void EditCars()
+        {
+            Console.WriteLine("Type what you want to do :\n");
+            Console.WriteLine("Add - Add a car.");
+            Console.WriteLine("Remove - Remove cars.");
+            Console.WriteLine("Edit - Edit a car.");
+
+            Console.WriteLine("\nAnything else to close the edit tab.\n");
+
+            string choice1 = Console.ReadLine();
+
+            Console.WriteLine("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+
+            switch (choice1.ToLower())
+            {
+                case "add":
+                    break;
+                case "remove":
+                    this.RemoveCars();
+                    break;
+                case "edit":
+                    break;
+                default:
+                    break;
             }
         }
 
