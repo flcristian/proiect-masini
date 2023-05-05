@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using test_liste.car.model;
 using test_liste.car.service;
+using test_liste.admin.model;
+using test_liste.admin.service;
+using System.Collections.Specialized;
 
 namespace test_liste.panel
 {
@@ -16,79 +19,87 @@ namespace test_liste.panel
         public Panel()
         {
             _carService = new CarService();
-            this.Main();
+            Admin _admin = new Admin(1, "George", "george@gmail.com", "parola");
+
+            Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+            Console.WriteLine($"Welcome {_admin.Name}!\n");
+
+            bool running = true;
+            this.Main(running);
         }
 
         // Pages
 
-        public void Main()
+        public void Main(bool _running)
         {
-            bool running = true;
-            string k;
-            while (running)
+            while (_running)
             {
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-                Console.WriteLine("Display - Display all cars.");
-                Console.WriteLine("Search - Search for cars.");
-                Console.WriteLine("Edit - Edit the car list.");
+                Console.WriteLine("1 - Display all cars.");
+                Console.WriteLine("2 - Search for cars.");
+                Console.WriteLine("3 - Edit the car list.");
 
                 Console.WriteLine("\nAnything else to end the program.\n");
 
-                k = Console.ReadLine();
+                string choice = Console.ReadLine();
 
-                Console.WriteLine("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                Console.WriteLine();
 
-                switch (k.ToLower())
+                bool running = true;
+                switch (choice.ToLower())
                 {
-                    case "display":
+                    case "1":
                         this.Display();
                         break;
-                    case "search":
+                    case "2":
                         this.Search();
                         break;
-                    case "edit":
-                        this.EditCars();
-                        break;
-                    case "help":
+                    case "3":
+                        this.EditCars(running);
                         break;
                     default:
-                        running = false;
+                        _running = false;
                         break;
                 }
             }
         }
 
-        public void EditCars()
+        public void EditCars(bool _running)
         {
-            Console.WriteLine("Type what you want to do :\n");
-            Console.WriteLine("Add - Add a car.");
-            Console.WriteLine("Remove - Remove cars.");
-            Console.WriteLine("Edit - Edit a car.");
-
-            Console.WriteLine("\nAnything else to close the edit tab.\n");
-
-            string choice1 = Console.ReadLine();
-
-            Console.WriteLine("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-
-            switch (choice1.ToLower())
+            while (_running)
             {
-                case "add":
-                    break;
-                case "remove":
-                    this.RemoveCars();
-                    break;
-                case "edit":
-                    break;
-                default:
-                    break;
+                Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                Console.WriteLine("Type what you want to do :\n");
+                Console.WriteLine("1 - Add a car.");
+                Console.WriteLine("2 - Remove cars.");
+                Console.WriteLine("3 - Edit a car.");
+
+                Console.WriteLine("\nAnything else to close the edit tab.\n");
+
+                string choice1 = Console.ReadLine();
+
+                Console.WriteLine();
+
+                switch (choice1.ToLower())
+                {
+                    case "1":
+                        this.AddCar();
+                        break;
+                    case "2":
+                        this.RemoveCars();
+                        break;
+                    case "3":
+                        break;
+                    default:
+                        _running = false;
+                        break;
+                }
             }
         }
 
         // Metode
 
         // Display all current cars.
-
         public void Display()
         {
             _carService.Display();
@@ -97,19 +108,27 @@ namespace test_liste.panel
         // Searches for a tag and displays found cars.
         public void Search()
         {
-            string input = "";
             Console.WriteLine("Type a tag you want to search for :\n");
-            input = Console.ReadLine();
-            Console.WriteLine("\nYour results are :\n");
+            string input = Console.ReadLine();
+            Console.WriteLine();
 
             List<Car> list = _carService.SearchForTag(input);
-            foreach (Car c in list)
+            if(list.Count > 0)
             {
-                Console.WriteLine(c.Description() + "\n");
+                Console.WriteLine("Your results are :\n");
+
+                foreach (Car c in list)
+                {
+                    Console.WriteLine(c.Description() + "\n");
+                }
             }
+            else
+            {
+                Console.WriteLine("There were no cars found!\n");
+            }
+            
         }
 
-        // Removes cars.
         public void RemoveCars()
         {
             Console.WriteLine("What do you want to remove cars by :\n");
@@ -163,6 +182,32 @@ namespace test_liste.panel
                 Console.WriteLine("\nNo cars found by specified parameters.\n");
             }
             
+        }
+
+        public void AddCar()
+        {
+            Console.Write("Enter the car's year : ");
+            int year = Int32.Parse(Console.ReadLine());
+            Console.Write("Enter the car's maker : ");
+            string make = Console.ReadLine();
+            Console.Write("Enter the car's model : ");
+            string model = Console.ReadLine();
+            Console.Write("Enter the car's type : ");
+            string type = Console.ReadLine();
+            Console.Write("Enter the car's fuel type : ");
+            string fuelType = Console.ReadLine();
+            Console.Write("Enter the car's transmission type : ");
+            string transmissionType = Console.ReadLine();
+            Console.Write("Enter the car's drivetrain type : ");
+            string drivetrainType = Console.ReadLine();
+            Console.Write("Enter the car's color : ");
+            string color = Console.ReadLine();
+
+            Car car = new Car(0, year, make, model, type, fuelType, transmissionType, drivetrainType, color);
+
+            _carService.AddCar(car);
+
+            Console.WriteLine("\nThe car was added succesfully!\n");
         }
     }
 }
