@@ -105,7 +105,15 @@ namespace test_liste.panel
         // Display all current cars.
         public void Display()
         {
-            _carService.Display();
+            if(_carService.CarCount() > 0)
+            {
+                _carService.Display();
+            }
+            else
+            {
+                Console.WriteLine("There were no cars found!\n");
+            }
+            
         }
 
         // Searches for a tag and displays found cars.
@@ -136,12 +144,14 @@ namespace test_liste.panel
         {
             Console.WriteLine("What do you want to remove cars by :\n");
             Console.WriteLine("Id - Remove a car that has a specific id.");
-            Console.WriteLine("Tag - Remove all cars with a certain tag.\n");
+            Console.WriteLine("Tag - Remove all cars with a certain tag.");
+            Console.WriteLine("All - Remove every car from the list.\n");
 
             string choice1 = Console.ReadLine();
 
             int count = 0;
 
+            bool notall = true;
             switch (choice1.ToLower())
             {
                 case "id":
@@ -153,6 +163,7 @@ namespace test_liste.panel
                         count = 1;
                     }                   
                     break;
+
                 case "tag":
                     Console.WriteLine("\nType what tag to remove cars by :\n");
                     string tag = Console.ReadLine();
@@ -162,22 +173,34 @@ namespace test_liste.panel
                         _carService.RemoveByTag(tag);
                     }                    
                     break;
+
+                case "all":
+                    Console.Write("\nAre you sure you want to remove all cars? (Y / N) : ");
+                    string choice2 = Console.ReadLine();
+                    count = _carService.CarCount();
+                    if (choice2.ToLower().Equals("y"))
+                    {
+                        _carService.RemoveAllCars();
+                    }
+
+                    notall = false;
+                    break;
                 default:
                     break;
             }
 
             if (count > 0)
             {
-                Console.WriteLine($"\nRemoved {count} cars succesfully!\nDo you want to display the new car list? (Y/N) :\n");
-                string choice2 = Console.ReadLine();
-                Console.WriteLine();
-                switch (choice2.ToLower())
+                Console.WriteLine($"\nRemoved {count} cars succesfully!\n");
+                if (notall)
                 {
-                    case "y":
+                    Console.Write("Do you want to display the new car list? (Y / N) : ");
+                    string choice3 = Console.ReadLine();
+                    Console.WriteLine();
+                    if (choice3.ToLower().Equals("y"))
+                    {
                         _carService.Display();
-                        break;
-                    default:
-                        break;
+                    }
                 }
             }
             else
