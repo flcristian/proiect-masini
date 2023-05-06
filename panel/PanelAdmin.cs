@@ -9,14 +9,16 @@ using test_liste.car.service;
 using test_liste.admin.model;
 using test_liste.admin.service;
 using System.Collections.Specialized;
+using Microsoft.VisualBasic.FileIO;
+using System.Drawing;
 
 namespace test_liste.panel
 {
-    internal class Panel
+    internal class PanelAdmin
     {
         CarService _carService;
 
-        public Panel()
+        public PanelAdmin()
         {
             _carService = new CarService();
             Admin _admin = new Admin(1, "George", "george@gmail.com", "parola");
@@ -55,7 +57,7 @@ namespace test_liste.panel
                         this.Search();
                         break;
                     case "3":
-                        this.EditCars(running);
+                        this.EditCarList(running);
                         break;
                     default:
                         _running = false;
@@ -64,7 +66,7 @@ namespace test_liste.panel
             }
         }
 
-        public void EditCars(bool _running)
+        public void EditCarList(bool _running)
         {
             while (_running)
             {
@@ -89,6 +91,7 @@ namespace test_liste.panel
                         this.RemoveCars();
                         break;
                     case "3":
+                        this.EditCar();
                         break;
                     default:
                         _running = false;
@@ -143,7 +146,7 @@ namespace test_liste.panel
             {
                 case "id":
                     Console.WriteLine("\nType the id of the car you want removed :\n");
-                    int id = Console.Read();
+                    int id = Int32.Parse(Console.ReadLine());
                     if (_carService.FindById(id) != null)
                     {
                         _carService.RemoveById(id);
@@ -208,6 +211,153 @@ namespace test_liste.panel
             _carService.AddCar(car);
 
             Console.WriteLine("\nThe car was added succesfully!\n");
+        }
+
+        public void EditCar()
+        {
+            Console.WriteLine("Type the id of the car you want to edit :\n");
+            int id = Int32.Parse(Console.ReadLine());
+            Console.WriteLine();
+
+            Car car = _carService.FindById(id);
+            if(car == null)
+            {
+                Console.WriteLine("Car not found.\n");
+            }
+            else
+            {
+                Console.WriteLine("Type what you want to edit :");
+                Console.WriteLine("1 - Edit the car's year.");
+                Console.WriteLine("2 - Edit the car's make.");
+                Console.WriteLine("3 - Edit the car's model.");
+                Console.WriteLine("4 - Edit the car's type.");
+                Console.WriteLine("5 - Edit the car's fuel type.");
+                Console.WriteLine("6 - Edit the car's transmission type.");
+                Console.WriteLine("7 - Edit the car's drivetrain type.");
+                Console.WriteLine("8 - Edit the car's color.");
+                Console.WriteLine("9 - Edit the entire car.");
+                Console.WriteLine("Anything else to cancel.");
+
+                string choice = Console.ReadLine();
+                Console.WriteLine();
+
+                bool edited = false;
+                int year;
+                string make, model, type, fuelType, transmissionType, drivetrainType, color;
+                switch (choice.ToLower())
+                {
+                    case "1":
+                        Console.Write("Enter the car's year : ");
+                        year = Int32.Parse(Console.ReadLine());
+
+                        car.Year = year;
+                        edited = true;
+                        break;
+
+                    case "2":
+                        Console.Write("Enter the car's maker : ");
+                        make = Console.ReadLine();
+
+                        car.Make = make;
+                        edited = true;
+                        break;
+
+                    case "3":
+                        model = Console.ReadLine();
+                        Console.Write("Enter the car's type : ");
+
+                        car.Model = model;
+                        edited = true;
+                        break;
+
+                    case "4":
+                        Console.Write("Enter the car's type : ");
+                        type = Console.ReadLine();
+
+                        car.Type = type;
+                        edited = true;
+                        break;
+
+                    case "5":
+                        Console.Write("Enter the car's fuel type : ");
+                        fuelType = Console.ReadLine();
+
+                        car.FuelType = fuelType;
+                        edited = true;
+                        break;
+
+                    case "6":
+                        Console.Write("Enter the car's transmission type : ");
+                        transmissionType = Console.ReadLine();
+
+                        car.TransmissionType = transmissionType;
+                        edited = true;
+                        break;
+
+                    case "7":
+                        Console.Write("Enter the car's drivetrain type : ");
+                        drivetrainType = Console.ReadLine();
+
+                        car.DrivetrainType = drivetrainType;
+                        edited = true;
+                        break;
+
+                    case "8":
+                        Console.Write("Enter the car's color : ");
+                        color = Console.ReadLine();
+
+                        car.Color = color;
+                        edited = true;
+                        break;
+
+                    case "9":
+                        Console.Write("Enter the car's year : ");
+                        year = Int32.Parse(Console.ReadLine());
+                        Console.Write("Enter the car's maker : ");
+                        make = Console.ReadLine();
+                        Console.Write("Enter the car's model : ");
+                        model = Console.ReadLine();
+                        Console.Write("Enter the car's type : ");
+                        type = Console.ReadLine();
+                        Console.Write("Enter the car's fuel type : ");
+                        fuelType = Console.ReadLine();
+                        Console.Write("Enter the car's transmission type : ");
+                        transmissionType = Console.ReadLine();
+                        Console.Write("Enter the car's drivetrain type : ");
+                        drivetrainType = Console.ReadLine();
+                        Console.Write("Enter the car's color : ");
+                        color = Console.ReadLine();
+
+                        car.Year = year;
+                        car.Make = make;
+                        car.Model = model;
+                        car.Type = type;
+                        car.FuelType = fuelType;
+                        car.TransmissionType = transmissionType;
+                        car.DrivetrainType = drivetrainType;
+                        car.Color = color;
+
+                        edited = true;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                if (edited)
+                {
+                    List<string> tags = new List<string>();
+                    car.Tags = tags;
+                    car.AssignTagsAutomatically();
+                    _carService.EditCar(car);
+
+                    Console.WriteLine("\nThe car has been edited succesfully!\n");
+                }
+                else
+                {
+                    Console.WriteLine("\nThe car was not edited.\n");
+                }
+            }
         }
     }
 }
