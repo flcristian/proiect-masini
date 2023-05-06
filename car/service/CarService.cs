@@ -95,6 +95,19 @@ namespace test_liste.car.service
             _listCar.Add(car);
         }
 
+        public void EditCar(Car car)
+        {
+            for(int i = 0; i < _listCar.Count(); i++)
+            {
+                Car c = _listCar[i];
+                if(c.Id == car.Id)
+                {
+                    c = car;                    
+                }                
+                break;
+            }
+        }
+
         // Returns a list of objects that contain a specific tag.
         public List<Car> SearchForTag(string input)
         {
