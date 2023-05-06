@@ -40,6 +40,7 @@ namespace test_liste.panel
                 Console.WriteLine("1 - Display all cars.");
                 Console.WriteLine("2 - Search for cars.");
                 Console.WriteLine("3 - Edit the car list.");
+                Console.WriteLine("4 - Read list.");
 
                 Console.WriteLine("\nAnything else to end the program.\n");
 
@@ -58,6 +59,9 @@ namespace test_liste.panel
                         break;
                     case "3":
                         this.EditCarList(running);
+                        break;
+                    case "4":
+                        _carService.ReadList();
                         break;
                     default:
                         _running = false;
@@ -102,7 +106,6 @@ namespace test_liste.panel
 
         // Metode
 
-        // Display all current cars.
         public void Display()
         {
             if(_carService.CarCount() > 0)
@@ -116,7 +119,6 @@ namespace test_liste.panel
             
         }
 
-        // Searches for a tag and displays found cars.
         public void Search()
         {
             Console.WriteLine("Type a tag you want to search for :\n");
