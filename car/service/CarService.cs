@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using test_liste.car.model;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace test_liste.car.service
 {
@@ -16,11 +17,12 @@ namespace test_liste.car.service
         public CarService()
         {
             _listCar = new List<Car>();
-            this.Load();
+            this.ReadList();
         }
 
         // Metode
 
+        // Load function no more used.
         public void Load()
         {
             Car c1 = new Car(7812, 2017, "Mercedes-Benz", "GLC Coupe 350 e 4MATIC", "SUV", "Hybrid", "Automatic", "4X4", "Blue");
@@ -40,6 +42,35 @@ namespace test_liste.car.service
             _listCar.Add(c6);
             _listCar.Add(c7);
             _listCar.Add(c8);
+        }
+        
+        public void ReadList()
+        {
+            _listCar.Clear();
+            StreamReader sr = new StreamReader("../../../data/carlist.txt");
+
+            while (!sr.EndOfStream)
+            {
+                string line = sr.ReadLine();
+                string[] data = line.Split('/');
+                Car car = new Car(Int32.Parse(data[0]), Int32.Parse(data[1]), data[2], data[3], data[4], data[5], data[6], data[7], data[8]);
+
+                _listCar.Add(car);
+            }
+
+            sr.Close();
+        }
+
+        public void SaveList()
+        {
+            StreamWriter sw = new StreamWriter("../../../data/carlist.txt");
+
+            foreach(Car c in _listCar)
+            {
+                sw.WriteLineAsync($"{c.Id}/{c.Year}/{c.Make}/{c.Model}/{c.Type}/{c.FuelType}/{c.TransmissionType}/{c.DrivetrainType}/{c.Color}");
+            }
+
+            sw.Close();
         }
 
         public void Display()
