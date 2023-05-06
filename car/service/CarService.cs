@@ -89,6 +89,12 @@ namespace test_liste.car.service
             }
         }
 
+        public void RemoveAllCars()
+        {
+            List<Car> cars = new List<Car>();
+            _listCar = cars;
+        }
+
         public void AddCar(Car car)
         {
             car.Id = this.NewId();
@@ -106,6 +112,11 @@ namespace test_liste.car.service
                 }                
                 break;
             }
+        }
+
+        public int CarCount()
+        {
+            return _listCar.Count();
         }
 
         // Returns a list of objects that contain a specific tag.
