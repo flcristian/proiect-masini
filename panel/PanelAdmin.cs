@@ -23,8 +23,9 @@ namespace test_liste.panel
             _carService = new CarService();
             Admin _admin = new Admin(1, "George", "george@gmail.com", "parola");
 
-            Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            Console.WriteLine($"Welcome {_admin.Name}!\n");
+            Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+            Console.WriteLine($"Welcome {_admin.Name}!");
+            Console.WriteLine("Every change needs to be manually saved!");
 
             bool running = true;
             this.Main(running);
@@ -37,10 +38,9 @@ namespace test_liste.panel
             while (_running)
             {
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-                Console.WriteLine("1 - Display all cars.");
+                Console.WriteLine("1 - Display the car list.");
                 Console.WriteLine("2 - Search for cars.");
                 Console.WriteLine("3 - Edit the car list.");
-                Console.WriteLine("4 - Read list.");
 
                 Console.WriteLine("\nAnything else to end the program.\n");
 
@@ -60,9 +60,6 @@ namespace test_liste.panel
                     case "3":
                         this.EditCarList(running);
                         break;
-                    case "4":
-                        _carService.ReadList();
-                        break;
                     default:
                         _running = false;
                         break;
@@ -76,9 +73,13 @@ namespace test_liste.panel
             {
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
                 Console.WriteLine("Type what you want to do :\n");
-                Console.WriteLine("1 - Add a car.");
-                Console.WriteLine("2 - Remove cars.");
-                Console.WriteLine("3 - Edit a car.");
+                Console.WriteLine("1 - Display the car list.");
+                Console.WriteLine("2 - Search for cars.");
+                Console.WriteLine("3 - Add a car.");
+                Console.WriteLine("4 - Remove cars.");
+                Console.WriteLine("5 - Edit a car.");
+                Console.WriteLine("6 - Read car list from file.");
+                Console.WriteLine("7 - Save car list to file.");
 
                 Console.WriteLine("\nAnything else to close the edit tab.\n");
 
@@ -89,13 +90,25 @@ namespace test_liste.panel
                 switch (choice1.ToLower())
                 {
                     case "1":
-                        this.AddCar();
+                        this.Display();
                         break;
                     case "2":
-                        this.RemoveCars();
+                        this.Search();
                         break;
                     case "3":
+                        this.AddCar();
+                        break;
+                    case "4":
+                        this.RemoveCars();
+                        break;
+                    case "5":
                         this.EditCar();
+                        break;
+                    case "6":
+                        this.ReadCarList();
+                        break;
+                    case "7":
+                        this.SaveCarList();
                         break;
                     default:
                         _running = false;
@@ -106,6 +119,8 @@ namespace test_liste.panel
 
         // Metode
 
+        // Main
+        
         public void Display()
         {
             if(_carService.CarCount() > 0)
@@ -141,6 +156,8 @@ namespace test_liste.panel
             }
             
         }
+
+        // Edit List
 
         public void RemoveCars()
         {
@@ -382,6 +399,44 @@ namespace test_liste.panel
                 {
                     Console.WriteLine("\nThe car was not edited.\n");
                 }
+            }
+        }
+
+        public void ReadCarList()
+        {
+            Console.WriteLine("The current list might get modified!");
+            Console.Write("Are you sure you want to read the car list? (Y / N) : ");
+            string choice = Console.ReadLine();
+            Console.WriteLine();
+
+            if (choice.ToLower().Equals("y"))
+            {
+                _carService.ReadList();
+
+                Console.WriteLine("The car list was read succesfully!\n");
+            }
+            else
+            {
+                Console.WriteLine("The car list was not read.\n");
+            }
+        }
+
+        public void SaveCarList()
+        {
+            Console.WriteLine("The car list file will be modified!");
+            Console.Write("Are you sure you want to save the car list? (Y / N) : ");
+            string choice = Console.ReadLine();
+            Console.WriteLine();
+
+            if (choice.ToLower().Equals("y"))
+            {
+                _carService.SaveList();
+
+                Console.WriteLine("The car list was saved succesfully!\n");
+            }
+            else
+            {
+                Console.WriteLine("The car list was not saved.\n");
             }
         }
     }

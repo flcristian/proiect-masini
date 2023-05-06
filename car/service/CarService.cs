@@ -17,11 +17,12 @@ namespace test_liste.car.service
         public CarService()
         {
             _listCar = new List<Car>();
-            this.Load();
+            this.ReadList();
         }
 
         // Metode
 
+        // Load function no more used.
         public void Load()
         {
             Car c1 = new Car(7812, 2017, "Mercedes-Benz", "GLC Coupe 350 e 4MATIC", "SUV", "Hybrid", "Automatic", "4X4", "Blue");
@@ -56,6 +57,20 @@ namespace test_liste.car.service
 
                 _listCar.Add(car);
             }
+
+            sr.Close();
+        }
+
+        public void SaveList()
+        {
+            StreamWriter sw = new StreamWriter("../../../data/carlist.txt");
+
+            foreach(Car c in _listCar)
+            {
+                sw.WriteLineAsync($"{c.Id}/{c.Year}/{c.Make}/{c.Model}/{c.Type}/{c.FuelType}/{c.TransmissionType}/{c.DrivetrainType}/{c.Color}");
+            }
+
+            sw.Close();
         }
 
         public void Display()
