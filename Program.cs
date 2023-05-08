@@ -6,7 +6,6 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        PanelAdmin _panelAdmin = new PanelAdmin();
-        
+        PanelAdmin _panelAdmin = new PanelAdmin();       
     }
 }

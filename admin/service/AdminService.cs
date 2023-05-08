@@ -10,7 +10,7 @@ namespace test_liste.admin.service
 {
     internal class AdminService
     {
-        List<Admin> _listAdmin;
+        private List<Admin> _listAdmin;
 
         public AdminService()
         {

@@ -8,3 +8,4 @@
 6417/2022/Mercedes-Benz/GLE Coupe AMG 63 S MHEV 4MATIC+/SUV/Hybrid/Automatic/4X4/Silver
 3553/2015/Lexus/GS 450H F-Sport/Sedan/Petrol/Automatic/RWD/Black
 4964/2021/Jaguar/XF 2.0 Petrol R-Dynamic S/Sedan/Petrol/Automatic/AWD/Blue
+3835/2013/Lexus/GS 250/Sedan/Petrol/Automatic/RWD/Black
