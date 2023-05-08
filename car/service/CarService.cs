@@ -67,7 +67,7 @@ namespace test_liste.car.service
 
             foreach(Car c in _listCar)
             {
-                sw.WriteLineAsync($"{c.Id}/{c.Year}/{c.Make}/{c.Model}/{c.Type}/{c.FuelType}/{c.TransmissionType}/{c.DrivetrainType}/{c.Color}");
+                sw.WriteLine($"{c.Id}/{c.Year}/{c.Make}/{c.Model}/{c.Type}/{c.FuelType}/{c.TransmissionType}/{c.DrivetrainType}/{c.Color}");
             }
 
             sw.Close();
